@@ -36,7 +36,6 @@ RUN apt-get update \
 		libaprutil1-dev \
 		libpcre++-dev \
 		make \
-		openssl \
 	&& rm -r /var/lib/apt/lists/* \
 	&& curl -SL "$OPEN_DDL_GZ_URL" -o openssl.tar.gz \
 	&& curl -SL "$OPEN_DDL_GZ_URL.sha1" -o openssl.tar.gz.sha1 \

@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM ubuntu:14.04.1
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 #RUN groupadd -r www-data && useradd -r --create-home -g www-data www-data
@@ -34,6 +34,7 @@ RUN apt-get update \
 		libaprutil1-dev \
 		libpcre++-dev \
 		make \
+		openssl \
 	&& rm -r /var/lib/apt/lists/* \
 	&& curl -SL "$HTTPD_BZ2_URL" -o httpd.tar.bz2 \
 	&& curl -SL "$HTTPD_BZ2_URL.asc" -o httpd.tar.bz2.asc \
@@ -42,7 +43,7 @@ RUN apt-get update \
 	&& tar -xvf httpd.tar.bz2 -C src/httpd --strip-components=1 \
 	&& rm httpd.tar.bz2* \
 	&& cd src/httpd \
-	&& ./configure --enable-so --prefix=$HTTPD_PREFIX \
+	&& ./configure --enable-ssl --enable-so --prefix=$HTTPD_PREFIX \
 	&& make -j"$(nproc)" \
 	&& make install \
 	&& cd ../../ \
